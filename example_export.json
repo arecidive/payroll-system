@@ -1,0 +1,58 @@
+{
+    "employees": {
+        "Антон": {
+            "works": [
+                {
+                    "REGULAR": 20.0
+                },
+                {
+                    "OVERTIME": 31.0
+                }
+            ]
+        },
+        "Иван": {
+            "works": [
+                {
+                    "REGULAR": 10.0
+                },
+                {
+                    "OVERTIME": 20.0
+                }
+            ]
+        },
+        "Максим": {
+            "works": [
+                {
+                    "REGULAR": 30.0
+                }
+            ]
+        },
+        "Сергей": {
+            "works": [
+                {
+                    "REGULAR": 40.0
+                }
+            ]
+        },
+        "Ася": {
+            "works": [
+                {
+                    "REGULAR": 80.0
+                },
+                {
+                    "OVERTIME": 5.0
+                }
+            ]
+        },
+        "Амур": {
+            "works": []
+        },
+        "Яша": {
+            "works": []
+        }
+    },
+    "work_rates": {
+        "REGULAR": 50.0,
+        "OVERTIME": 200.0
+    }
+}
