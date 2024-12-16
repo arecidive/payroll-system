@@ -70,7 +70,7 @@ class WorkWindow:
         """Создание секции с кнопками."""
         button_frame = ttk.Frame(self.window)
         button_frame.pack(fill=tk.X, padx=5, pady=5)
-        ttk.Button(button_frame, text="Добавить", command=self.save).pack(side=tk.LEFT, padx=5)
+        ttk.Button(button_frame, text="Добавить", command=self._save).pack(side=tk.LEFT, padx=5)
         ttk.Button(button_frame, text="Отмена", command=self.window.destroy).pack(side=tk.LEFT, padx=5)
 
     def _create_labeled_frame(self, text: str) -> ttk.LabelFrame:
@@ -79,7 +79,7 @@ class WorkWindow:
         frame.pack(fill=tk.X, padx=5, pady=5)
         return frame
 
-    def save(self) -> None:
+    def _save(self) -> None:
         """Добавление работы сотруднику."""
         try:
             employee_name = self.employee_var.get()

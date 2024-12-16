@@ -72,7 +72,7 @@ class RateWindow:
         """Создание секции с кнопками."""
         button_frame = ttk.Frame(parent)
         button_frame.pack(fill=tk.X, padx=5, pady=5)
-        ttk.Button(button_frame, text="Сохранить", command=self.add_rate).pack(side=tk.LEFT, padx=5)
+        ttk.Button(button_frame, text="Сохранить", command=self._add_rate).pack(side=tk.LEFT, padx=5)
         ttk.Button(button_frame, text="Очистить", command=self._clear_form).pack(side=tk.LEFT, padx=5)
 
     def _on_double_click(self, event: tk.Event) -> None:
@@ -95,7 +95,7 @@ class RateWindow:
         for work_type, rate in self.payroll.work_rates.items():
             self.tree.insert("", tk.END, values=(work_type.name, f"{rate:.2f}"))
 
-    def add_rate(self) -> None:
+    def _add_rate(self) -> None:
         """Добавление или обновление ставки"""
         try:
             work_type_name = self.work_type_var.get()

@@ -25,6 +25,7 @@ class MainWindow:
         self.sort_reverse = False
 
         self._create_widgets()
+        self._update_table()
 
     def run(self) -> None:
         """Запуск главного цикла приложения."""
@@ -34,7 +35,7 @@ class MainWindow:
         """Создание и размещение всех виджетов главного окна."""
         self._create_button_frame()
         self._create_treeview()
-        self.root.bind("<Delete>", lambda event: self._delete_employee())
+        self.root.bind("<BackSpace>", lambda event: self._delete_employee())
 
     def _create_button_frame(self) -> None:
         """Создание фрейма с кнопками управления."""
@@ -132,7 +133,7 @@ class MainWindow:
                 return
 
             if messagebox.askyesno("Подтверждение", "Вы уверены, что хотите удалить всех сотрудников?"):
-                self.payroll.employees.clear()
+                self.payroll.clear_all_employees()
                 self._update_table()
                 messagebox.showinfo("Успех", "Все сотрудники удалены")
 
@@ -200,9 +201,10 @@ class MainWindow:
             return
 
         try:
-            self._load_data_from_file(filename)
-            self._update_table()
-            messagebox.showinfo("Успех", "Данные успешно загружены")
+            if messagebox.askyesno("Подтверждение", "Текущие данные будут удалены. Продолжить?"):
+                self._load_data_from_file(filename)
+                self._update_table()
+                messagebox.showinfo("Успех", "Данные успешно загружены")
         except Exception as e:
             messagebox.showerror("Ошибка", f"Не удалось загрузить файл: {str(e)}")
 
@@ -211,16 +213,20 @@ class MainWindow:
         with open(filename, "r", encoding="utf-8") as f:
             data = json.load(f)
 
-        self.payroll.employees.clear()
-        self.payroll.work_rates.clear()
+        self.payroll.clear_data()
 
-        # Загрузка ставок
-        for work_type_name, rate in data["work_rates"].items():
-            self.payroll.add_work_rate(WorkType[work_type_name], rate)
+        try:
+            # Загрузка ставок
+            for work_type_name, rate in data["work_rates"].items():
+                self.payroll.add_work_rate(WorkType[work_type_name], rate)
 
-        # Загрузка сотрудников и их работ
-        for name, employee_data in data["employees"].items():
-            self.payroll.add_employee(name)
-            for work in employee_data["works"]:
-                for work_type_name, hours in work.items():
-                    self.payroll.add_work(name, WorkType[work_type_name], hours)
+            # Загрузка сотрудников и их работ
+            for name, employee_data in data["employees"].items():
+                self.payroll.add_employee(name)
+                for work in employee_data["works"]:
+                    for work_type_name, hours in work.items():
+                        self.payroll.add_work(name, WorkType[work_type_name], hours)
+
+        except Exception as e:
+            self.payroll.clear_data()
+            raise Exception(f"Ошибка при загрузке данных: {str(e)}")

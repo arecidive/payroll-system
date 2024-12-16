@@ -30,10 +30,10 @@ class EmployeeWindow:
         button_frame = ttk.Frame(self.window)
         button_frame.pack(fill=tk.X, padx=5, pady=5)
 
-        ttk.Button(button_frame, text="Сохранить", command=self.save).pack(side=tk.LEFT, padx=5)
+        ttk.Button(button_frame, text="Сохранить", command=self._save).pack(side=tk.LEFT, padx=5)
         ttk.Button(button_frame, text="Отмена", command=self.window.destroy).pack(side=tk.LEFT, padx=5)
 
-    def save(self) -> None:
+    def _save(self) -> None:
         """Сохранение нового сотрудника."""
         try:
             name = str(self.name_entry.get().strip())
